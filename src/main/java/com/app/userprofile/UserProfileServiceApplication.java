@@ -1,4 +1,4 @@
-package com.app.user_profile_service;
+package com.app.userprofile;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

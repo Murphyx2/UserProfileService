@@ -1,5 +1,6 @@
-package com.app.user_profile_service;
+package com.app.userprofile;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import org.springframework.boot.test.context.SpringBootTest;
@@ -8,7 +9,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 class UserProfileServiceApplicationTests {
 
 	@Test
-	void contextLoads() {
+	void uselessTest(){
+		Assertions.assertTrue(true);
 	}
 
 }

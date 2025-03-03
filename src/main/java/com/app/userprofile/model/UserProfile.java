@@ -1,4 +1,4 @@
-package com.app.user_profile_service.model;
+package com.app.userprofile.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Data
-public class User {
+public class UserProfile {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
