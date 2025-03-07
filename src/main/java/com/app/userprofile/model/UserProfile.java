@@ -9,6 +9,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -16,6 +17,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Data
+@Builder
 public class UserProfile {
 
 	@Id
@@ -39,6 +41,10 @@ public class UserProfile {
 	@JoinColumn(name= "photo_id", referencedColumnName = "id")
 	private Photo profilePicture;
 
-	private Boolean active;
+	// by Default all user are active.
+	private Boolean active = true;
+
+
+
 
 }
