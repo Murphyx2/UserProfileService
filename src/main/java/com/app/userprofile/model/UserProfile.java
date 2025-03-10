@@ -2,8 +2,6 @@ package com.app.userprofile.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
@@ -24,7 +22,6 @@ import lombok.NoArgsConstructor;
 public class UserProfile {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.UUID)
 	@Column(unique = true, nullable = false, updatable = false)
 	@NotNull(message = "Id is mandatory")
 	private UUID id;
@@ -36,7 +33,7 @@ public class UserProfile {
 	@NotBlank(message = "Email is mandatory")
 	private String email;
 
-	private UserType userType;
+	private UserType userType = UserType.FREE;
 
 	@OneToOne
 	@JoinColumn(name ="address_id", referencedColumnName = "id")

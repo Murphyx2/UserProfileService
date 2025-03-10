@@ -1,6 +1,7 @@
 package com.app.userprofile.exceptions;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.springframework.http.HttpStatus;
@@ -19,11 +20,15 @@ public class GlobalExceptionHandler {
 		for (FieldError fieldError : ex.getBindingResult().getFieldErrors()) {
 			errors.put(fieldError.getField(), fieldError.getDefaultMessage());
 		}
+		errors.put("error:", "Missing Parameters");
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
 	}
 
 	@ExceptionHandler(UserAlreadyExistsException.class)
-	public ResponseEntity<String> handleUserAlreadyExistsException(UserAlreadyExistsException ex) {
-		return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
+	public ResponseEntity<Map<String, String>> handleUserAlreadyExistsException(UserAlreadyExistsException ex) {
+		Map<String, String> error = new LinkedHashMap<>();
+		error.put("error:", "User Creation");
+		error.put("message:", ex.getMessage());
+		return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
 	}
 }
