@@ -25,6 +25,7 @@ public class UserProfileService {
 		return repository.save(userProfile);
 	}
 
+	@SuppressWarnings("unused")
 	public UserProfile getUserById(UUID uuid){
 		return repository.findById(uuid).orElseThrow();
 	}

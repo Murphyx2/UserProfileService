@@ -19,6 +19,7 @@ class UserProfileControllerTest {
 	@Autowired
 	private MockMvc mockMvc;
 
+	@SuppressWarnings("unused")
 	@MockitoBean
 	private UserProfileService service;
 
