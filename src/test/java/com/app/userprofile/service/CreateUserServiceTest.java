@@ -1,6 +1,7 @@
 package com.app.userprofile.service;
 
 import com.app.userprofile.Repository.UserRepository;
+import com.app.userprofile.exceptions.UserAlreadyExistsException;
 import com.app.userprofile.model.UserProfile;
 import com.app.userprofile.model.UserType;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,11 +12,13 @@ import org.mockito.MockitoAnnotations;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-class UserProfileServiceTest {
+class CreateUserServiceTest {
 
 	@Mock
 	private UserRepository repository;
@@ -32,7 +35,7 @@ class UserProfileServiceTest {
 	UserProfile testUser = TestUtils.generateUserProfile(UserType.FREE);
 
 	@Test
-	void testSaveNewUserSuccess(){
+	void saveNewUserSuccess(){
 
 		// Mock repository behavior
 		when(repository.save(testUser)).thenReturn(testUser);
@@ -50,5 +53,17 @@ class UserProfileServiceTest {
 		verify(repository, times(1)).save(testUser);
 	}
 
+	@Test
+	void saveNewUserButUserAlreadyExistByEmail(){
+		// Mock
+		when(repository.existsByEmail(testUser.getEmail())).thenReturn(true);
+		when(repository.save(testUser)).thenReturn(testUser);
 
+		// Assert exception on service.save
+		UserAlreadyExistsException exception = assertThrows(UserAlreadyExistsException.class, () -> service.save(testUser));
+		assertEquals(String.format("User with email %s already exists", testUser.getEmail()), exception.getMessage());
+		assertEquals("email", exception.getFieldName());
+		assertEquals(testUser.getEmail(), exception.getFieldValue());
+		verify(repository, never()).save(testUser);
+	}
 }

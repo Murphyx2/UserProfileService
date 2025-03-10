@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.app.userprofile.model.UserProfile;
 import com.app.userprofile.service.UserProfileService;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/users")
@@ -21,7 +22,7 @@ public class UserProfileController {
 	}
 
 	@PostMapping
-	public UserProfile createUser(@RequestBody UserProfile userProfile){
+	public UserProfile createUser(@Valid @RequestBody UserProfile userProfile){
 		return userProfileService.save(userProfile);
 	}
 

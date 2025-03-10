@@ -3,6 +3,7 @@ package com.app.userprofile.service;
 import org.springframework.stereotype.Service;
 
 import com.app.userprofile.Repository.UserRepository;
+import com.app.userprofile.exceptions.UserAlreadyExistsException;
 import com.app.userprofile.model.UserProfile;
 import java.util.UUID;
 
@@ -16,14 +17,19 @@ public class UserProfileService {
 	}
 
 	public UserProfile save(UserProfile userProfile) {
+		//Check if User already exists
+		if(repository.existsByEmail(userProfile.getEmail())) {
+			throw new UserAlreadyExistsException("email", userProfile.getEmail());
+		}
+
 		return repository.save(userProfile);
 	}
 
 	public UserProfile getUserById(UUID uuid){
-		return repository.findById(uuid).orElse(null);
+		return repository.findById(uuid).orElseThrow();
 	}
 
 	public UserProfile getUserByEmail(String email){
-		return repository.getUserProfileByEmail(email);
+		return repository.getUserProfileByEmail(email).orElseThrow();
 	}
 }
