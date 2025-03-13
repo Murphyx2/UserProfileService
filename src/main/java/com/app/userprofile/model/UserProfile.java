@@ -8,7 +8,6 @@ import jakarta.persistence.OneToOne;
 import java.util.UUID;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,7 +22,6 @@ public class UserProfile {
 
 	@Id
 	@Column(unique = true, nullable = false, updatable = false)
-	@NotNull(message = "Id is mandatory")
 	private UUID id;
 
 	private String firstName;

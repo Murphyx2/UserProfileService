@@ -25,6 +25,14 @@ public class JwtUtil {
 				.get("email", String.class);
 	}
 
+	public String getIdFromToken(String token) {
+		return Jwts.parser()
+				.build()
+				.parseSignedClaims(token)
+				.getPayload()
+				.get("id", String.class);
+	}
+
 	public boolean validateToken(String token) {
 		try {
 			Jwts.parser()
