@@ -22,13 +22,22 @@ public class JwtUtil {
 				.build()
 				.parseSignedClaims(token)
 				.getPayload()
-				.get("email", String.class);
+				.get("username", String.class);
+	}
+
+	public String getIdFromToken(String token) {
+		return Jwts.parser()
+				.verifyWith(getSigningKey())
+				.build()
+				.parseSignedClaims(token)
+				.getPayload()
+				.get("unique_id", String.class);
 	}
 
 	public boolean validateToken(String token) {
 		try {
 			Jwts.parser()
-					.verifyWith( getSigningKey())
+					.verifyWith(getSigningKey())
 					.build()
 					.parseSignedClaims(token);
 			return true;
