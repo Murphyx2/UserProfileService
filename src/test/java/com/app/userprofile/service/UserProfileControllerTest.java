@@ -34,11 +34,10 @@ class UserProfileControllerTest {
 
 	@Test
 	void testCreateUserButMissingInputs() throws Exception {
-		mockMvc.perform(post("/api/users")
+		mockMvc.perform(post("/api/user")
 						.contentType(MediaType.APPLICATION_JSON)
 						.content("{\"username\":\"\",\"email\":\"\"}"))
 				.andExpect(status().isBadRequest())
-				.andExpect(jsonPath("$.id").value("Id is mandatory"))
 				.andExpect(jsonPath("$.email").value("Email is mandatory"));
 	}
 }

@@ -1,5 +1,7 @@
 package com.app.userprofile.security;
 
+import com.app.userprofile.exceptions.AuthenticationJWTException;
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,25 +25,31 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
 	@Override
 	public void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) //
-			throws ServletException, IOException {
+			throws ServletException, IOException, AuthenticationJWTException {
 		String authorizationHeader = request.getHeader("Authorization");
 
 		if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
 			String jwt = authorizationHeader.substring(7);
-			String email = jwtUtil.getEmailFromToken(jwt);
-			String id = jwtUtil.getIdFromToken(jwt);
+			try {
+				String email = jwtUtil.getEmailFromToken(jwt);
+				String id = jwtUtil.getIdFromToken(jwt);
 
-			if (email != null && SecurityContextHolder.getContext().getAuthentication() == null
-					&& jwtUtil.validateToken(jwt)) {
+				if (email != null && SecurityContextHolder.getContext().getAuthentication() == null && jwtUtil.validateToken(jwt)) {
 					JwtUserDetails userDetails = new JwtUserDetails(id, email);
 
 					UsernamePasswordAuthenticationToken authToken = //
 							new UsernamePasswordAuthenticationToken(userDetails, null, null);
 					authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 					SecurityContextHolder.getContext().setAuthentication(authToken);
-
+				}
+				chain.doFilter(request, response);
+			} catch (ExpiredJwtException e) {
+				throw new AuthenticationJWTException("JWT Session has expired");
+			} catch (Exception e) {
+				throw new AuthenticationJWTException("Invalid JWT token");
 			}
+		} else {
+			chain.doFilter(request, response);
 		}
-		chain.doFilter(request, response);
 	}
 }

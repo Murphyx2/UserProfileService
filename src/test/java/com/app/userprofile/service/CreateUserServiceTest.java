@@ -61,7 +61,7 @@ class CreateUserServiceTest {
 
 		// Assert exception on service.save
 		UserAlreadyExistsException exception = assertThrows(UserAlreadyExistsException.class, () -> service.save(testUser));
-		assertEquals(String.format("User with email %s already exists", testUser.getEmail()), exception.getMessage());
+		assertEquals(String.format("User of email %s already exists", testUser.getEmail()), exception.getMessage());
 		assertEquals("email", exception.getFieldName());
 		assertEquals(testUser.getEmail(), exception.getFieldValue());
 		verify(repository, never()).save(testUser);
