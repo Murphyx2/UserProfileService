@@ -1,18 +1,22 @@
-version: '3.8'
 services:
-  app:
+  profile-service:
     build: .
     ports:
       - "${SERVER_PORT}:${SERVER_PORT}"
     depends_on:
-      - db
+      - profile-service-db
+    networks:
+      - user_profile_net
+      - app-network
+#    env_file:
+#      - .env
     environment:
-      - DB_HOST=db
+      - DB_HOST=profile-service-db
       - DB_PORT=${DB_PORT}
       - DB_NAME=${DB_NAME}
       - DB_USERNAME=${DB_USERNAME}
       - DB_PASSWORD=${DB_PASSWORD}
-  db:
+  profile-service-db:
     image: postgres:15
     ports:
       - "${DB_PORT_EXTERNAL}:${DB_PORT}"
@@ -22,5 +26,13 @@ services:
       - POSTGRES_PASSWORD=${DB_PASSWORD}
     volumes:
       - pgdata:/var/lib/postgresql/data
+    networks:
+      - user_profile_net
 volumes:
   pgdata:
+
+networks:
+  user_profile_net:
+      driver: bridge
+  app-network:
+      external: true

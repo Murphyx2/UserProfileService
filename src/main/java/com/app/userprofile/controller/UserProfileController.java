@@ -7,6 +7,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -39,12 +40,13 @@ public class UserProfileController {
 	}
 
 	@GetMapping
-	public UserProfile getUserProfile() {
-		// Get the email from the security context
-		JwtUserDetails userDetails = (JwtUserDetails) SecurityContextHolder.getContext() //
-				.getAuthentication().getPrincipal();
-		// Find user by their email, since username is the same as their email.
-		return userProfileService.getUserByEmail(userDetails.getEmail());
+	public UserProfile getUserProfile(@RequestHeader("X-User-username") String email) {
+		return userProfileService.getUserByEmail(email);
+	}
+
+	@GetMapping("/endpoint")
+	public String getUserProfileEndpointAccess(){
+		return "Available";
 	}
 
 	// Deactivate user will be implemented in the future
