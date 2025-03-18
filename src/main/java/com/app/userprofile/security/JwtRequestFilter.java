@@ -2,6 +2,7 @@ package com.app.userprofile.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -47,20 +48,22 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 				}
 				chain.doFilter(request, response);
 			} catch (ExpiredJwtException e) {
-				sendErrorResponse(response, HttpStatus.UNAUTHORIZED, "JWT Session has expired");
+				sendErrorResponse(response, "Authentication", HttpStatus.UNAUTHORIZED, "JWT Session has expired");
+			} catch (JwtException e) {
+				sendErrorResponse(response,"Authentication", HttpStatus.UNAUTHORIZED, e.getMessage());
 			} catch (Exception e) {
-				sendErrorResponse(response, HttpStatus.UNAUTHORIZED, "Invalid JWT token");
+				sendErrorResponse(response, "Server", HttpStatus.BAD_REQUEST, e.getMessage());
 			}
 		} else {
 			chain.doFilter(request, response);
 		}
 	}
 
-	private void sendErrorResponse(HttpServletResponse response, HttpStatus status, String message) throws IOException {
+	private void sendErrorResponse(HttpServletResponse response, String errorType, HttpStatus status, String message) throws IOException {
 		response.setStatus(status.value());
 		response.setContentType("application/json");
 		Map<String, String> error = new HashMap<>();
-		error.put("error", "Authentication");
+		error.put("error", errorType);
 		error.put("message", message);
 		new ObjectMapper().writeValue(response.getWriter(), error);
 	}
