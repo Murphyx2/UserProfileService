@@ -1,4 +1,4 @@
-package com.app.userprofile.exceptions;
+package com.app.userprofile.exceptions.userprofile;
 
 import lombok.Getter;
 

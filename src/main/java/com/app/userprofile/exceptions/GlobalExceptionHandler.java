@@ -11,6 +11,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import com.app.userprofile.exceptions.userprofile.UserAlreadyExistsException;
+
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 

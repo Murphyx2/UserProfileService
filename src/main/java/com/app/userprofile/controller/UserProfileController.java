@@ -1,7 +1,6 @@
 package com.app.userprofile.controller;
 
-import java.util.UUID;
-
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.app.userprofile.model.UserProfile;
+import com.app.userprofile.domain.userprofile.UserProfile;
+import com.app.userprofile.domain.userprofile.input.CreateUserProfileRequest;
+import com.app.userprofile.domain.userprofile.output.CreateUserProfileResponse;
 import com.app.userprofile.security.JwtUserDetails;
 import com.app.userprofile.service.UserProfileService;
 import jakarta.validation.Valid;
@@ -28,15 +29,12 @@ public class UserProfileController {
 	}
 
 	@PostMapping
-	public UserProfile createUser(@Valid @RequestBody UserProfile userProfile){
+	public ResponseEntity<CreateUserProfileResponse> createUser(@Valid @RequestBody CreateUserProfileRequest request){
 		// Get the email from the security context
 		JwtUserDetails userDetails = (JwtUserDetails) SecurityContextHolder.getContext() //
 				.getAuthentication().getPrincipal();
 
-		// Set UUID
-		userProfile.setId(UUID.fromString(userDetails.getId()));
-
-		return userProfileService.save(userProfile);
+		return ResponseEntity.ok().body(userProfileService.createUserProfile(request, userDetails.getId()));
 	}
 
 	@GetMapping

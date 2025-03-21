@@ -1,9 +1,9 @@
 package com.app.userprofile.service;
 
 import com.app.userprofile.Repository.UserRepository;
-import com.app.userprofile.exceptions.UserAlreadyExistsException;
-import com.app.userprofile.model.UserProfile;
-import com.app.userprofile.model.UserType;
+import com.app.userprofile.exceptions.userprofile.UserAlreadyExistsException;
+import com.app.userprofile.domain.userprofile.UserProfile;
+import com.app.userprofile.domain.userprofile.UserType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

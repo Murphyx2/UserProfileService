@@ -1,4 +1,4 @@
-package com.app.userprofile.model;
+package com.app.userprofile.domain.address;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -16,12 +16,15 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Photo {
+public class Address {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
 	@Column(unique = true, nullable = false, updatable = false)
 	private UUID id;
-	private String description;
-	private String uri;
+	private String street;
+	private String city;
+	private String state;
+	private String zip;
+	private String country;
 }

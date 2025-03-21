@@ -1,9 +1,9 @@
 package com.app.userprofile.service;
 
-import com.app.userprofile.model.Address;
-import com.app.userprofile.model.Photo;
-import com.app.userprofile.model.UserProfile;
-import com.app.userprofile.model.UserType;
+import com.app.userprofile.domain.address.Address;
+import com.app.userprofile.domain.photo.Photo;
+import com.app.userprofile.domain.userprofile.UserProfile;
+import com.app.userprofile.domain.userprofile.UserType;
 import java.util.UUID;
 
 public class TestUtils {

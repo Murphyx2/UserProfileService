@@ -1,5 +1,7 @@
-package com.app.userprofile.model;
+package com.app.userprofile.domain.userprofile;
 
+import com.app.userprofile.domain.address.Address;
+import com.app.userprofile.domain.photo.Photo;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -28,7 +30,6 @@ public class UserProfile {
 	private String lastName;
 
 	@Column(unique = true, nullable = false)
-	@NotBlank(message = "Email is mandatory")
 	private String email;
 
 	private UserType userType = UserType.FREE;
@@ -45,7 +46,43 @@ public class UserProfile {
 	// by Default all user are active.
 	private Boolean active = true;
 
+	public UserProfile withId(UUID id) {
+		this.setId(id);
+		return this;
+	}
 
+	public UserProfile withFirstName(String firstName) {
+		this.setFirstName(firstName);
+		return this;
+	}
 
+	public UserProfile withLastName(String lastName) {
+		this.setLastName(lastName);
+		return this;
+	}
 
+	public UserProfile withEmail(String email) {
+		this.setEmail(email);
+		return this;
+	}
+
+	public UserProfile withUserType(UserType userType) {
+		this.setUserType(userType);
+		return this;
+	}
+
+	public UserProfile withPhoneNumber(String phoneNumber) {
+		this.setPhoneNumber(phoneNumber);
+		return this;
+	}
+
+	public UserProfile withProfilePicture(Photo profilePicture) {
+		this.setProfilePicture(profilePicture);
+		return this;
+	}
+
+	public UserProfile withActive(Boolean active) {
+		this.setActive(active);
+		return this;
+	}
 }

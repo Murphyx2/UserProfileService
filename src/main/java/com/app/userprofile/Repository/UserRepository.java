@@ -2,7 +2,7 @@ package com.app.userprofile.Repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.app.userprofile.model.UserProfile;
+import com.app.userprofile.domain.userprofile.UserProfile;
 
 import java.util.Optional;
 import java.util.UUID;
