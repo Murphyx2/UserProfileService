@@ -85,4 +85,9 @@ public class UserProfile {
 		this.setActive(active);
 		return this;
 	}
+
+	public UserProfile withAddress(Address address) {
+		this.setAddress(address);
+		return this;
+	}
 }
