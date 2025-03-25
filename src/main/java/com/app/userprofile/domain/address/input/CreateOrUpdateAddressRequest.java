@@ -25,6 +25,26 @@ public class CreateOrUpdateAddressRequest {
 
 	private String country;
 
+	public CreateOrUpdateAddressRequest withCity(String city) {
+		this.setCity(city);
+		return this;
+	}
+
+	public CreateOrUpdateAddressRequest withCountry(String country) {
+		this.setCountry(country);
+		return this;
+	}
+
+	public CreateOrUpdateAddressRequest withId(String id) {
+		this.setId(id);
+		return this;
+	}
+
+	public CreateOrUpdateAddressRequest withState(String state) {
+		this.setState(state);
+		return this;
+	}
+
 	public CreateOrUpdateAddressRequest withStreet(String street) {
 		this.setStreet(street);
 		return this;
@@ -35,23 +55,8 @@ public class CreateOrUpdateAddressRequest {
 		return this;
 	}
 
-	public CreateOrUpdateAddressRequest withCity(String city) {
-		this.setCity(city);
-		return this;
-	}
-
-	public CreateOrUpdateAddressRequest withState(String state) {
-		this.setState(state);
-		return this;
-	}
-
 	public CreateOrUpdateAddressRequest withZip(String zip) {
 		this.setZip(zip);
-		return this;
-	}
-
-	public CreateOrUpdateAddressRequest withCountry(String country) {
-		this.setCountry(country);
 		return this;
 	}
 }

@@ -31,10 +31,10 @@ public class AddressService implements AddressServiceBase {
 
 	@Override
 	public CreateOrUpdateAddressResponse createOrUpdateAddress(CreateOrUpdateAddressRequest request) {
-		Address newAddress = null;
-		try{
+		Address newAddress;
+		try {
 			newAddress = addressRepository.save(AddressConverter.convert(request));
-		}catch (Exception e){
+		} catch (Exception e) {
 			log.error(e.getMessage());
 			return new CreateOrUpdateAddressResponse().withAddress(null);
 		}
@@ -42,12 +42,15 @@ public class AddressService implements AddressServiceBase {
 	}
 
 	@Override
-	public GetAddressResponse getAddress(GetAddressRequest request) {
-		return addressRepository.getAddressesById(UUID.fromString(request.getId()));
+	public DeleteAddressResponse deleteAddress(DeleteAddressRequest request) {
+
+		addressRepository.deleteById(UUID.fromString(request.getId()));
+
+		return new DeleteAddressResponse().withSuccess(true);
 	}
 
 	@Override
-	public DeleteAddressResponse deleteAddress(DeleteAddressRequest request) {
-		return null;
+	public GetAddressResponse getAddress(GetAddressRequest request) {
+		return new GetAddressResponse().withAddress(addressRepository.getAddressById(UUID.fromString(request.getId())));
 	}
 }

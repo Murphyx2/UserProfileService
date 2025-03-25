@@ -7,10 +7,6 @@ import com.app.userprofile.domain.userprofile.input.CreateUserProfileRequest;
 
 public class UserProfileConverter {
 
-	private UserProfileConverter(){
-		// Do nothing on purpose
-	}
-
 	public static UserProfile convert(CreateUserProfileRequest request, String id) {
 
 		new UserProfile();
@@ -20,8 +16,12 @@ public class UserProfileConverter {
 				.firstName(request.getFirstName()) //
 				.lastName(request.getLastName()) //
 				.phoneNumber(request.getPhoneNumber()) //
-				//.address(request.getAddress())
+				.address(request.getAddress())
 				//.profilePicture(request.getProfilePicture())
 				.build();
+	}
+
+	private UserProfileConverter() {
+		// Do nothing on purpose
 	}
 }

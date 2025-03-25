@@ -11,8 +11,7 @@ public interface AddressServiceBase {
 
 	CreateOrUpdateAddressResponse createOrUpdateAddress(CreateOrUpdateAddressRequest request);
 
-	GetAddressResponse getAddress(GetAddressRequest request);
-
-
 	DeleteAddressResponse deleteAddress(DeleteAddressRequest request);
+
+	GetAddressResponse getAddress(GetAddressRequest request);
 }

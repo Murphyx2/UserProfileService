@@ -2,6 +2,9 @@ package com.app.userprofile.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -10,8 +13,6 @@ import com.app.userprofile.domain.address.input.GetAddressRequest;
 import com.app.userprofile.domain.address.output.CreateOrUpdateAddressResponse;
 import com.app.userprofile.domain.address.output.GetAddressResponse;
 import com.app.userprofile.service.AddressService;
-import jakarta.validation.Valid;
-import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 
 @RestController
@@ -26,13 +27,13 @@ public class AddressController {
 	}
 
 	@POST
-	public ResponseEntity<CreateOrUpdateAddressResponse> createOrUpdateAddress(CreateOrUpdateAddressRequest request) {
+	public ResponseEntity<CreateOrUpdateAddressResponse> createOrUpdateAddress(@RequestBody CreateOrUpdateAddressRequest request) {
 
 		return ResponseEntity.ok().body(addressService.createOrUpdateAddress(request));
 	}
 
-	@GET
-	public ResponseEntity<GetAddressResponse> getAddress(@Valid GetAddressRequest request) {
-		return ResponseEntity.ok().body(addressService.getAddress(request));
+	@GetMapping("/{id}")
+	public ResponseEntity<GetAddressResponse> getAddress(@PathVariable(required = true) String id ) {
+		return ResponseEntity.ok().body(addressService.getAddress(new GetAddressRequest().withId(id)));
 	}
 }
