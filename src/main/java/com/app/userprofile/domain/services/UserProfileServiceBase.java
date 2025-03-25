@@ -8,7 +8,7 @@ import com.app.userprofile.domain.userprofile.output.GetUserProfileResponse;
 
 public interface UserProfileServiceBase {
 
-	public CreateUserProfileResponse createUserProfile(CreateUserProfileRequest request, String id);
+	CreateUserProfileResponse createUserProfile(CreateUserProfileRequest request, String id);
 
 	GetUserProfileResponse getUserProfileByEmail(String email);
 
